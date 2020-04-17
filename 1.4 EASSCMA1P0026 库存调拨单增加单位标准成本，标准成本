@@ -1,0 +1,40 @@
+// 1.4	EASSCMA1P0026 库存调拨单增加单位标准成本，标准成本
+var table=pluginCtx.getKDTable("detailTable");
+table.addKDTEditListener(function(event,methodName){
+	// 弹出消息，用于调试 （用于打印 methodName 值）
+	// com.kingdee.eas.util.client.MsgBox.showInfo(methodName);
+	if(methodName == "equals"){
+		return this==event;
+	}
+	if(methodName == "editStopped"){		
+		var curRow = table.getRow(event.getRowIndex());
+		var colName = table.getColumn(event.getColIndex()).getKey();
+		//com.kingdee.eas.util.client.MsgBox.showInfo(colName);
+		// 如果当前列为物料
+		if ("materialNum" == colName){
+				var materialNum = curRow.getCell("materialNum").getValue();
+				// 库存组织
+				var sou = pluginCtx.getKDBizPromptBox("prmtMoveOutStorageOrgUnit").getValue();
+				// 财务组织
+				var cou = com.kingdee.eas.scm.im.inv.client.InvClientUtils.getCompanyInfo(sou);
+				// 根据物料和财务组织，取单位标准成本
+				var cost = com.kingdee.eas.scm.im.inv.client.InvClientUtils.getUnitStandardCost(materialNum,cou);
+				// com.kingdee.eas.util.client.MsgBox.showInfo(cost);
+				curRow.getCell("unitStandardCost").setValue(cost);			
+		}
+		// 弹出消息，用于调试
+		//com.kingdee.eas.util.client.MsgBox.showInfo(colName);
+		 
+		// 如果当前列为数量，数量列改变时，计算标准成本
+		if ("qty" == colName){
+			com.kingdee.eas.util.client.MsgBox.showInfo("开始计算标准成本");
+			var qty = curRow.getCell("qty").getValue();
+			var unitcost = curRow.getCell("unitStandardCost").getValue();
+			var cost = qty * unitcost
+			curRow.getCell("standardCost").setValue(cost);
+			// com.kingdee.eas.util.client.MsgBox.showInfo(cost);			
+		}		
+	}
+	if(methodName == "editStopping"){
+	}
+});
