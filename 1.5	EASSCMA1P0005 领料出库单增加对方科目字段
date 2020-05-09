@@ -1,0 +1,66 @@
+// 增加对方科目(F7)字段的过滤条件：过滤库存组织委托的财务组织下的会计科目
+var otherbillNames = JavaImporter();
+// 数据包
+otherbillNames.importPackage(Packages.com.kingdee.bos.metadata.entity); 
+// 查询工具包
+otherbillNames.importPackage(Packages.com.kingdee.bos.metadata.query.util); 
+with(otherbillNames){
+	// 获取 F7 控件字段的 query 
+	var prmtoppositeAccount =  pluginCtx.getKDBizPromptBox("prmtoppAccount");
+	// 过滤（选择）监听
+	prmtoppositeAccount.addSelectorListener(function(e){
+		// 获取需求方库存组织
+		var storageorg = pluginCtx.getKDBizPromptBox("prmtStorageOrgUnit").getValue();
+		// 判断如果需求方库存组织不为空执行逻辑
+		if (storageorg != null){
+			// 获取需求方库存组织的id
+			var sid = storageorg.getId();
+			// 获取需求方库存组织公司信息
+			var company = com.kingdee.eas.scm.common.client.SCMClientUtils.getCompanyInfo(sid);
+			var cid = company.getId().toString();
+			// 过滤视图（固定写法）			
+			var view =  new EntityViewInfo();
+			// 过滤条件（固定写法）
+			var filter =  new FilterInfo();
+			//过滤当前财务组织的科目（过滤逻辑）【companyID.id 属于 F7 查询中的字段,cid 是取出的值，EQUALS 等于】 
+			filter.getFilterItems().add(new FilterItemInfo("companyID.id",cid,CompareType.EQUALS));
+			//var aa = new FilterItemInfo("companyID.id",cid,CompareType.EQUALS);
+			// 把过滤条件写到过滤视图（固定写法）
+			view.setFilter(filter);
+			// F7 字段过滤视图设置（固定写法）
+			prmtoppositeAccount.setEntityViewInfo(view);
+			// F7 字段过滤视图运行（固定写法）
+			prmtoppositeAccount.getQueryAgent().resetRuntimeEntityView();
+			//com.kingdee.eas.util.client.MsgBox.showInfo(aa);
+			}	
+		});
+	// 提交监听 
+	prmtoppositeAccount.addCommitListener(function(e){
+		// 获取需求方库存组织
+		var storageorg = pluginCtx.getKDBizPromptBox("prmtStorageOrgUnit").getValue();
+		if(storageorg !=null ){
+			var sid = storageorg.getId();
+			var company = com.kingdee.eas.scm.common.client.SCMClientUtils.getCompanyInfo(sid);
+			var cid = company.getId().toString();
+			var view = new EntityViewInfo();
+			var filter = new FilterInfo();
+			filtre.getFilterItems().add(new FilterItemInfo("companyID.id",cid,CompareType.EQUAlS));
+			view.setFilter(filter);
+			prmtoppositeAccount.setEntityViewInfo(view);
+			prmtoppositeAccount.getQueryAgent().resetRuntimeEntityView();
+			}
+		});
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+	
