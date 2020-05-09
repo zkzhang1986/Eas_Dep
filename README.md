@@ -1,4 +1,5 @@
 # Eas_Dep
+https://my.oschina.net/oscfrh/blog/718331
 EAS开发常用代码
 author：frh
 date： 2015-04-15
