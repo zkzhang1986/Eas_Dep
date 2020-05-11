@@ -1,15 +1,3 @@
-# Eas_Dep
-https://my.oschina.net/oscfrh/blog/718331
-EAS开发常用代码
-author：frh
-date： 2015-04-15
-email： frh0792@qq.com
-前台操作
-保存校验
-覆盖EditUI的verifyInput方法
-
-------------------------------------------------
-
   编辑事件KDTEditListener包括以下几个方法：
   editStarting 编辑器启动中，在编辑器启动之前发出，通过设置返回值可以取消启动编辑器。
   editStarted 编辑启动后，在编辑启动之后发出。
@@ -19,6 +7,10 @@ email： frh0792@qq.com
   equals 相同（即无改变）
 
 ------------------------------------------------
+
+前台操作
+保存校验
+覆盖EditUI的verifyInput方法
 
 校验表头字段
 
