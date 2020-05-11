@@ -1,0 +1,26 @@
+// 1.7	EASSCMA1P0236 应收单增加携带物料规格字段 
+// 获取分录F7控件（扩展：比如做过滤）
+var materialBiz = pluginCtx.getKDTable("kdtEntry").getColumn("materialNumber").getEditor().getComponent();
+pluginCtx.getKDTable("kdtEntry").addKDTEditListener(function(event,methodName){
+	// com.kingdee.eas.util.client.MsgBox.showInfo(methodName);
+	if(methodName == "editStopped"){
+		// 获取分录控件
+		var kdtEntrys = pluginCtx.getKDTable("kdtEntry");
+		// 获取当前行索引(固定写法)
+		var rowIndex = kdtEntrys.getSelectManager().getActiveRowIndex();
+		// var curRow =  kdtEntrys.getRow(event.getRowIndex());
+		// com.kingdee.eas.util.client.MsgBox.showInfo(event.getRowIndex());
+		// 获取当前列索引（固定写法）
+		var colIndex = kdtEntrys.getSelectManager().getActiveColumnIndex();
+		// com.kingdee.eas.util.client.MsgBox.showInfo(colIndex);
+		if (kdtEntrys.getColumn("materialNumber").getColumnIndex() == colIndex){
+			// 通过 行-列 索引获取物料值
+			var material = kdtEntrys.getCell(rowIndex,colIndex).getValue();
+			// com.kingdee.eas.util.client.MsgBox.showInfo(quge);
+			//if (material != null && material.get("quge") != null){
+			if (null != material  && null != material.get("quge")){
+				kdtEntrys.getCell(rowIndex,"quge").setValue(material.get("quge"));
+				}
+			}		
+	}
+});
