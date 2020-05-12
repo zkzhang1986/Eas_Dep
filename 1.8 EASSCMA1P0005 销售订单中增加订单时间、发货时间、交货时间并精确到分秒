@@ -1,0 +1,18 @@
+1.8 EASSCMA1P0005 销售订单中增加订单时间、发货时间、交货时间并精确到分秒。
+实现：
+方案名：ZSaleOrderAddTime
+字段名：
+pkorderTime 订单时间 日期控件
+pksendTime	发货时间 日期控件
+pkdeliveryTime 交货时间 日期控件
+业务单元：com.kingdee.eas.scm.sd.sale.SaleOrder
+
+在onLoad()方法增加后置脚本，控制日期字段显示格式以及允许显示日期。
+// 获取日期控件，显示控件精确到秒；
+pluginCtx.getKDDatePicker("pkpkorderTime").setTimeEnabled(true);
+// 获取日期控件，设置控件格式；
+pluginCtx.getKDDatePicker("pkpkorderTime").setDatePattern("yyyy-mm-dd HH:mm:ss");
+pluginCtx.getKDDatePicker("pkpksendTime").setTimeEnabled(true);
+pluginCtx.getKDDatePicker("pkpksendTime").setDatePattern("yyyy-mm-dd HH:mm:ss");
+pluginCtx.getKDDatePicker("pkpkdeliveryTime").setTimeEnabled(true);
+pluginCtx.getKDDatePicker("pkpkdeliveryTime").setDatePattern("yyyy-mm-dd HH:mm:ss");
