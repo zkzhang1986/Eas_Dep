@@ -1,0 +1,20 @@
+// 引入分录
+var entry = pluginCtx.getKDTable("kdtEntries");
+// 判断行
+for (var i=0;i<entry.getRowCount();i++){
+	//取值
+	var app_way  = entry.getRow(i).getCell("approvedWay").getValue();
+	var brand = entry.getRow(i).getCell("brand").getValue();
+	// 判断
+	if (null == app_way){
+		com.kingdee.eas.util.client.MsgBox.showInfo("核销方式不能为空!");
+		// 终止
+		com.kingdee.eas.util.SysUtil.abort();
+		}
+	if (null != app_way && app_way == com.kingdee.eas.cp.bc.ApprovedWayEnum.Discount){
+		if(null == brand){
+			com.kingdee.eas.util.client.MsgBox.showInfo("核销方式为折扣时，必须录入品牌!");
+			com.kingdee.eas.util.SysUtil.abort();
+			}
+		}
+	}
