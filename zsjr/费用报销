@@ -1,3 +1,13 @@
+//界面加载-后置脚本
+//限定销售实项选择范围
+var prmtsaleItem = pluginCtx.getKDBizPromptBox("prmtsaleItem");
+var view = new com.kingdee.bos.metadata.entity.EntityViewInfo();
+var filterInfo = new com.kingdee.bos.metadata.entity.FilterInfo();
+filterInfo.getFilterItems().add(new com.kingdee.bos.metadata.entity.FilterItemInfo("group.id","0ChY+zznQbSZjrMG7jNKKwXSzQw="));
+view.setFilter(filterInfo);
+prmtsaleItem.setEntityViewInfo(view);
+
+//提交-前置脚本
 // 引入分录
 var entry = pluginCtx.getKDTable("kdtEntries");
 // 判断行
